@@ -12,12 +12,20 @@ export default class Cube
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.time = this.experience.time
+        this.debug = this.experience.debug;
+
+        // Debug
+        if(this.debug.active)
+        {
+            this.debugFolder = this.debug.ui.addFolder('Cube')
+        }
 
         this.setUniforms()
         this.setGeometry()
 
         this.setMaterial()
         this.setMesh()
+        this.eDebug()
 
     }
     setGeometry()
@@ -62,6 +70,21 @@ export default class Cube
         this.material.uniforms.uTime.value = this.time.elapsed
         
         // console.log(this.uniforms.uTime);
+    }
+    eDebug()
+    {
+        // Debug
+        if(this.debug.active)
+        {
+            this.debug
+            this.debugFolder
+            .add(this.mesh.position, 'z')
+                .name('Position Z')
+                .min(0)
+                .max(1)
+                .step(0.0001)
+                
+        }
     }
 
 }
