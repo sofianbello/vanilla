@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pathway Gothic One', sans-serif;
+    scroll-behavior: smooth;
+}
+
+
+html,
+body
+{
+    overflow: hidden;
+}
+
+html{
+    background-color: #171427;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
+.webgl
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+    z-index: 3;
+}
+
+h1.testHtml{
+    position: absolute;
+    color: aliceblue;
+    font-size: 10rem;
+    top: 0;
+    left: 0;
+    outline: none;
+    z-index: 1;
+}
