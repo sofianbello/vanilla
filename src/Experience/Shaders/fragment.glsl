@@ -14,7 +14,7 @@ varying vec2 vUv;
 
 vec4 permute(vec4 x)
 {
-    return mod(((x*uTime*0.00003)+1.0)*x, 289.0);
+    return mod(((x*3.0+uTime*0.000003)+1.0)*x, 289.0);
 }
 
 vec2 fade(vec2 t)
