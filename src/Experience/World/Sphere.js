@@ -4,7 +4,7 @@ import fragment from '../Shaders/fragment.glsl'
 import vertex from '../Shaders/vertex.glsl'
 
 
-export default class Cube 
+export default class Sphere 
 {
     constructor()
     {
@@ -23,7 +23,7 @@ export default class Cube
     }
     setGeometry()
     {
-        this.geometry = new THREE.BoxGeometry(1.5,1.0,1.5)
+        this.geometry = new THREE.SphereGeometry(.8,24.0,64)
     }
 
     setUniforms()
@@ -56,7 +56,7 @@ export default class Cube
                 child.receiveShadow = true
             }
         })
-        console.log('Cube Loaded');
+        console.log('Sphere Loaded');
     }
     update()
     {

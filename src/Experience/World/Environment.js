@@ -13,7 +13,7 @@ export default class Environment
         // Debug
         if(this.debug.active)
         {
-            this.debugFolder = this.debug.ui.addFolder('Environment')
+            
         }
         
         this.setSunLight();
@@ -32,33 +32,7 @@ export default class Environment
         // Debug
         if(this.debug.active)
         {
-            this.debugFolder
-                .add(this.sunLight, 'intensity')
-                .name('Sunlight')
-                .min(0)
-                .max(3)
-                .step(0.0001)
-
-            this.debugFolder
-                .add(this.sunLight.position, 'x')
-                .name('SunPosX')
-                .min(-10)
-                .max(10)
-                .step(0.0001)
-
-            this.debugFolder
-                .add(this.sunLight.position, 'y')
-                .name('SunPosY')
-                .min(0)
-                .max(10)
-                .step(0.0001)
-
-            this.debugFolder
-                .add(this.sunLight.position, 'z')
-                .name('SunPosZ')
-                .min(-10)
-                .max(10)
-                .step(0.0001)
+            
         }
     }
     setEnvironmentMap()
@@ -88,13 +62,7 @@ export default class Environment
         if(this.debug.active)
         {
             this.debug
-            this.debugFolder
-            .add(this.environmentMap, 'intensity')
-                .name('Intensity')
-                .min(0)
-                .max(1)
-                .step(0.0001)
-                .onChange(this.environmentMap.updateMaterials)
+            
         }
     }
 
