@@ -56,13 +56,35 @@ export default class Cube
                 child.receiveShadow = true
             }
         })
-        console.log('Cube Loaded');
     }
     update()
     {
         this.material.uniforms.uTime.value = this.time.elapsed
         
         // console.log(this.uniforms.uTime);
+    }
+    destroy()
+    {
+        // Traverse Scene
+        this.scene.traverse((child) =>
+        {
+            if(child instanceof THREE.Mesh)
+            {
+                child.geometry.dispose()
+                for(const key in child.material)
+                {
+                    const value = child.material[key]
+                    if(value && typeof value.dispose === 'function')
+                    {
+                        value.dispose()
+                    }
+                }
+                
+            }
+
+        })
+        this.scene.remove(this.mesh)
+        
     }
     
 

@@ -67,22 +67,29 @@ export default class World
                 .name('Object')
                 .onChange((value)=>{
                     if(value === myObjects.cube){
-                        console.log('Cube selected');
-                        if(this.cube){
-                            console.log('Cube already present');
+                        if(this.cube && !this.sphere){
+                            this.cube.destroy()
+                            this.cube = new Cube()
+                        }else if(this.sphere){
+                            this.sphere.destroy()
+                            this.cube = new Cube()
                         }else {
                             this.cube = new Cube()
-
-                        }
                             
-                    }else if(value === myObjects.sphere){
-                        if(this.sphere){
-                            console.log('Sphere already present');
                         }
-                        this.sphere = new Sphere()
-                    }else 
-                    {console.log('no object');
-                }
+                        
+                    }else if(value === myObjects.sphere){
+                        if(this.sphere && !this.cube){
+                            this.sphere.destroy()
+                            this.sphere = new Sphere() 
+                        }else if(this.cube){
+                            this.cube.destroy()
+                            this.sphere = new Sphere() 
+                        }else {
+                            this.sphere = new Sphere() 
+                        }
+                    }
+                
                 })
             } 
             
@@ -142,52 +149,8 @@ export default class World
             
         }
     }
-    destroy()
-    {
-
-        // Traverse Scene
-        this.scene.traverse((child) =>
-        {
-            // console.log(child);
-            if(child instanceof THREE.Mesh)
-            {
-                child.geometry.dispose()
-                // console.log(child.geometry);
-                for(const key in child.material)
-                {
-                    // console.log(key);
-                    const value = child.material[key]
-                    if(value && typeof value.dispose === 'function')
-                    {
-                        value.dispose()
-                    }
-                }
-                
-            }
-            // }
-        })
-        // Traverse Scene
-        // this.scene.traverse((child) =>
-        // {
-        //     if(child instanceof THREE.Mesh)
-        //     {
-        //         child.geometry.dispose()
-        //         for(const key in child.material)
-        //         {
-        //             const value = child.material[key]
-        //             if(value && typeof value.dispose === 'function')
-        //             {
-        //                 value.dispose()
-        //             }
-        //         }
-        //     }
-        // })
-
-        // if(this.debug.active)
-        // {
-            // this.debug.ui.destroy()
-        // }
-    }
+    
+    
 
 
 }

@@ -56,7 +56,6 @@ export default class Sphere
                 child.receiveShadow = true
             }
         })
-        console.log('Sphere Loaded');
     }
     update()
     {
@@ -64,6 +63,27 @@ export default class Sphere
         
         // console.log(this.uniforms.uTime);
     }
-    
+    destroy()
+    {
+        // Traverse Scene
+        this.scene.traverse((child) =>
+        {
+            if(child instanceof THREE.Mesh)
+            {
+                child.geometry.dispose()
+                for(const key in child.material)
+                {
+                    const value = child.material[key]
+                    if(value && typeof value.dispose === 'function')
+                    {
+                        value.dispose()
+                    }
+                }
+                
+            }
+
+        })
+        this.scene.remove(this.mesh)
+    }
 
 }
