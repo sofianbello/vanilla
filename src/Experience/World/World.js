@@ -63,7 +63,7 @@ export default class World
                 }
                 // Define Objects
                 this.object = {cube: myObjects.cube, sphere: myObjects.sphere}
-                this.debugObjectPicker.add(this.object, 'object', [myObjects.cube, this.object.sphere])
+                this.debugObjectPicker.add(this.object, 'object', {Box:myObjects.cube, Sphere:myObjects.sphere})
                 .name('Object')
                 .onChange((value)=>{
                     if(value === myObjects.cube){
