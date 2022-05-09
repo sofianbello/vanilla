@@ -142,6 +142,52 @@ export default class World
             
         }
     }
+    destroy()
+    {
+
+        // Traverse Scene
+        this.scene.traverse((child) =>
+        {
+            // console.log(child);
+            if(child instanceof THREE.Mesh)
+            {
+                child.geometry.dispose()
+                // console.log(child.geometry);
+                for(const key in child.material)
+                {
+                    // console.log(key);
+                    const value = child.material[key]
+                    if(value && typeof value.dispose === 'function')
+                    {
+                        value.dispose()
+                    }
+                }
+                
+            }
+            // }
+        })
+        // Traverse Scene
+        // this.scene.traverse((child) =>
+        // {
+        //     if(child instanceof THREE.Mesh)
+        //     {
+        //         child.geometry.dispose()
+        //         for(const key in child.material)
+        //         {
+        //             const value = child.material[key]
+        //             if(value && typeof value.dispose === 'function')
+        //             {
+        //                 value.dispose()
+        //             }
+        //         }
+        //     }
+        // })
+
+        // if(this.debug.active)
+        // {
+            // this.debug.ui.destroy()
+        // }
+    }
 
 
 }
