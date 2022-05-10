@@ -4,7 +4,7 @@ import fragment from '../Shaders/fragment.glsl'
 import vertex from '../Shaders/vertex.glsl'
 
 
-export default class Cube 
+export default class Torus
 {
     constructor()
     {
@@ -19,11 +19,12 @@ export default class Cube
 
         this.setMaterial()
         this.setMesh()
+        this.addDebug()
 
     }
     setGeometry()
     {
-        this.geometry = new THREE.BoxGeometry(1.5,1.0,1.5)
+        this.geometry = new THREE.TorusGeometry(1,0.4,16,100)
     }
 
     setUniforms()
@@ -47,6 +48,7 @@ export default class Cube
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.mesh.position.y = 0.5
+        this.mesh.rotation.z = Math.PI*1.5
         this.scene.add(this.mesh)
         this.mesh.traverse((child)=>
         {
@@ -62,6 +64,11 @@ export default class Cube
         this.material.uniforms.uTime.value = this.time.elapsed
         
         // console.log(this.material.uniforms.uTime.value);
+    }
+    addDebug(){
+        if(this.debug.active)
+        {
+        }
     }
     destroy()
     {
@@ -83,8 +90,7 @@ export default class Cube
             }
 
         })
-        this.scene.remove(this.mesh)
-        
+        this.scene.remove(this.mesh)   
     }
     
 
