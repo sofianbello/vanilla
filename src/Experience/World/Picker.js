@@ -13,9 +13,6 @@ export default class ObjectPicker
         this.debug = this.experience.debug;
         
         this.objects = new Objects()
-        this.setDebug()
-        
-        this
     }
     update()
     {   
@@ -29,8 +26,8 @@ export default class ObjectPicker
         // Debug
         if(this.debug.active)
         {
-            this.debugFolder = this.debug.ui.addFolder('ObjectPicker')
-            this.debugObjectPicker = this.debugFolder.addFolder('Geometry')
+            this.debugFolder = this.debug.active
+            this.debugObjectPicker = this.debugFolder.children[0].addFolder('Object Picker')
             
             // Create ObjectPicker
 

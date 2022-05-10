@@ -25,7 +25,7 @@ export default class Camera
             this.sizes.width / this.sizes.height, 
             0.1,
             100)
-        this.instance.position.set(6, 4, 8)
+        this.instance.position.set(1, 1, 10)
         this.scene.add(this.instance)
     }
     setOrbitControls()
@@ -40,7 +40,7 @@ export default class Camera
     }
     update()
     {
-        this.control.update()
+        // this.control.update()
     }
     
 }

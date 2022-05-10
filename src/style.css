@@ -13,7 +13,7 @@
 html,
 body
 {
-    overflow: hidden;
+    overflow:auto;
 }
 
 html{
@@ -39,4 +39,20 @@ h1.testHtml{
     left: 0;
     outline: none;
     z-index: 1;
+}
+h1.title{
+    position: absolute;
+    color: aliceblue;
+    font-size: 10rem;
+    top: 80vh;
+    left: 0;
+    z-index: 5;
+}
+h1.section{
+    position:absolute;
+    color: aliceblue;
+    font-size: 10rem;
+    top: 100vh;
+    left: 0;
+    z-index: 5;
 }

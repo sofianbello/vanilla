@@ -1,4 +1,4 @@
-# Sandbox - v0.0.1
+# Sandbox - v0.0.2
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).

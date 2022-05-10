@@ -2,6 +2,7 @@ import Experience from "../Experience.js";
 import Environment from './Environment.js'
 import Floor from './Floor.js'
 import Picker from './Picker.js'
+import * as THREE from 'three'
 
 
 
@@ -18,13 +19,13 @@ export default class World
 
 
 
-        // // Test Mesh
-        // const testMesh = new THREE.Mesh(
-        //     new THREE.BoxGeometry(1,1,1),
-        //     new THREE.MeshStandardMaterial({color: 0xff1c77,wireframe: false})
-        // )
-        // testMesh.position.y = 0.7
-        // this.scene.add(testMesh)
+        // Test Mesh
+        const testMesh = new THREE.Mesh(
+            new THREE.BoxGeometry(1,1,1),
+            new THREE.MeshStandardMaterial({color: 0xff1c77,wireframe: false})
+        )
+        testMesh.position.y = 0.7
+        this.scene.add(testMesh)
         
         
         this.resources.on('ready', () => 
@@ -43,6 +44,7 @@ export default class World
         if(this.debug.active)
         {
             this.debugFolder = this.debug.ui.addFolder('World')
+            this.objectPicker.setDebug()
             
             
             // Create Debug if Environment
