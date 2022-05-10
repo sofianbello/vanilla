@@ -1,7 +1,7 @@
 import Experience from "../Experience.js";
 import Environment from './Environment.js'
 import Floor from './Floor.js'
-import ObjectPicker from './ObjectPicker.js'
+import Picker from './Picker.js'
 
 
 
@@ -13,7 +13,7 @@ export default class World
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.debug = this.experience.debug;
-        this.objectPicker = new ObjectPicker()
+        this.objectPicker = new Picker()
         
 
 
