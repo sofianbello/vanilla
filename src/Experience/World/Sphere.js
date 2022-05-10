@@ -19,6 +19,7 @@ export default class Sphere
 
         this.setMaterial()
         this.setMesh()
+        this.setDebug()
 
     }
     setGeometry()
@@ -57,6 +58,13 @@ export default class Sphere
             }
         })
     }
+    setDebug()
+    {
+        if(this.debug.active){
+            this.debugFolder = this.debug.active
+            this.objectControls = this.debugFolder.children[0].children[0].addFolder('Sphere Controls')
+        }
+    }
     update()
     {
         this.material.uniforms.uTime.value = this.time.elapsed
@@ -84,6 +92,7 @@ export default class Sphere
 
         })
         this.scene.remove(this.mesh)
+        this.objectControls.destroy()
     }
 
 }

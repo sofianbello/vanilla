@@ -19,7 +19,7 @@ export default class Torus
 
         this.setMaterial()
         this.setMesh()
-        this.addDebug()
+        this.setDebug()
 
     }
     setGeometry()
@@ -59,16 +59,18 @@ export default class Torus
             }
         })
     }
+    setDebug()
+    {
+        if(this.debug.active){
+            this.debugFolder = this.debug.active
+            this.objectControls = this.debugFolder.children[0].children[0].addFolder('Torus Controls')
+        }
+    }
     update()
     {
         this.material.uniforms.uTime.value = this.time.elapsed
         
         // console.log(this.material.uniforms.uTime.value);
-    }
-    addDebug(){
-        if(this.debug.active)
-        {
-        }
     }
     destroy()
     {
@@ -90,7 +92,8 @@ export default class Torus
             }
 
         })
-        this.scene.remove(this.mesh)   
+        this.scene.remove(this.mesh)
+        this.objectControls.destroy()
     }
     
 
