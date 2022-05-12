@@ -1,7 +1,7 @@
 import Experience from "../Experience";
 import * as THREE from "three";
-import fragment from '../Shaders/fragment.glsl'
-import vertex from '../Shaders/vertex.glsl'
+import fragment from '../Shaders/Shader_01/fragment.glsl'
+import vertex from '../Shaders/Shader_01/vertex.glsl'
 
 
 export default class Cube 
@@ -31,6 +31,7 @@ export default class Cube
     {
         this.uniforms = {}
         this.uniforms.uTime = this.time.elapsed
+        this.uniforms.uSpeed = 0.0005 // Default Speed
 
     }
     setMaterial()
@@ -39,10 +40,10 @@ export default class Cube
             vertexShader: vertex,
             fragmentShader: fragment,
             uniforms:{
-                uTime: {type:'f',value: this.uniforms.uTime}
+                uTime: {type:'f',value: this.uniforms.uTime},
+                uSpeed: {type:'f',value: this.uniforms.uSpeed}
             }
         })
-        this.material.needsUpdate = true
     }
     setMesh()
     {
@@ -63,11 +64,24 @@ export default class Cube
         if(this.debug.active){
             this.debugFolder = this.debug.active
             this.objectControls = this.debugFolder.children[0].children[0].addFolder('Box Controls')
+
+            // Geometry Controls
+            
+            this.objectControls.add(this.mesh.position, 'x').min(-2).max(2).step(0.0001).name('Position X')
+            this.objectControls.add(this.mesh.position, 'y').min(-2).max(2).step(0.0001).name('Position Y')
+            this.objectControls.add(this.mesh.position, 'z').min(-2).max(2).step(0.0001).name('Position Z')
+            // Uniforms
+            this.objectControls.add(this.mesh.material.uniforms.uSpeed, 'value').min(-0.15).max(0.15).step(0.000001).name('uSpeed')
+            .onChange((value)=>
+            {
+                this.uniforms.uSpeed = value;
+            })
         }
     }
     update()
     {
         this.material.uniforms.uTime.value = this.time.elapsed
+        this.material.uniforms.uSpeed.value = this.uniforms.uSpeed;
         
         // console.log(this.material.uniforms.uTime.value);
     }

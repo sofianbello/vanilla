@@ -1,7 +1,7 @@
 import Experience from "../Experience";
 import * as THREE from "three";
-import fragment from '../Shaders/fragment.glsl'
-import vertex from '../Shaders/vertex.glsl'
+import fragment from '../Shaders/Shader_01/fragment.glsl'
+import vertex from '../Shaders/Shader_01/vertex.glsl'
 
 
 export default class Sphere 
@@ -15,6 +15,7 @@ export default class Sphere
         this.debug = this.experience.debug;
 
         this.setUniforms()
+        this.setParams()
         this.setGeometry()
 
         this.setMaterial()
@@ -22,15 +23,24 @@ export default class Sphere
         this.setDebug()
 
     }
+    setParams()
+    {
+        this.radius = 0.8
+        this.wSegments = 24
+        this.hSegments = 32
+        
+    }
     setGeometry()
     {
-        this.geometry = new THREE.SphereGeometry(.8,24.0,64)
+        this.geometry = new THREE.SphereGeometry(this.radius,this.wSegments,this.hSegments)
     }
 
     setUniforms()
     {
         this.uniforms = {}
         this.uniforms.uTime = this.time.elapsed
+        this.uniforms.uSpeed = 0.0005 // Default Speed
+
 
     }
     setMaterial()
@@ -39,10 +49,11 @@ export default class Sphere
             vertexShader: vertex,
             fragmentShader: fragment,
             uniforms:{
-                uTime: {type:'f',value: this.uniforms.uTime}
+                uTime: {type:'f',value: this.uniforms.uTime},
+                uSpeed: {type:'f',value: this.uniforms.uSpeed}
+                
             }
         })
-        this.material.needsUpdate = true
     }
     setMesh()
     {
@@ -63,13 +74,48 @@ export default class Sphere
         if(this.debug.active){
             this.debugFolder = this.debug.active
             this.objectControls = this.debugFolder.children[0].children[0].addFolder('Sphere Controls')
+            
+            // Geometry Controls
+            this.objectControls.add(this, 'radius').min(-2).max(2).step(0.0001).name('Radius')
+            .onChange((value)=>
+            {
+                this.radius = value;
+                this.updateMesh()
+            })
+            
+            this.objectControls.add(this.mesh.position, 'x').min(-2).max(2).step(0.0001).name('Position X')
+            this.objectControls.add(this.mesh.position, 'y').min(-2).max(2).step(0.0001).name('Position Y')
+            this.objectControls.add(this.mesh.position, 'z').min(-2).max(2).step(0.0001).name('Position Z')
+            // Uniforms
+            this.objectControls.add(this.mesh.material.uniforms.uSpeed, 'value').min(-0.15).max(0.15).step(0.000001).name('uSpeed')
+            .onChange((value)=>
+            {
+                this.uniforms.uSpeed = value;
+            })
         }
     }
     update()
     {
         this.material.uniforms.uTime.value = this.time.elapsed
-        
+        this.material.uniforms.uSpeed.value = this.uniforms.uSpeed;
         // console.log(this.uniforms.uTime);
+    }
+    updateMesh()
+    {
+        this.mesh.traverse((child)=>
+        {
+            if(child instanceof THREE.Mesh)
+            {
+                // child.geometry.dispose()
+                child.geometry = this.geometry
+            }
+        })
+        console.log('something');
+        // this.scene.remove(this.mesh)
+        // this.scene.add(this.mesh)
+        // this.update()
+        // this.setGeometry()
+        // this.setMesh()
     }
     destroy()
     {
