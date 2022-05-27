@@ -1,6 +1,7 @@
 import Experience from "../Experience.js";
 import Environment from './Environment.js'
 import Floor from './Floor.js'
+import Portal from './Portal.js'
 import Picker from './Picker.js'
 import * as THREE from 'three'
 
@@ -13,26 +14,18 @@ export default class World
         this.experience = new Experience();
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
+        this.loaders = this.resources.loaders;
         this.debug = this.experience.debug;
         this.objectPicker = new Picker()
-        
 
-
-
-        // Test Mesh
-        const testMesh = new THREE.Mesh(
-            new THREE.BoxGeometry(1,1,1),
-            new THREE.MeshStandardMaterial({color: 0xff1c77,wireframe: false})
-        )
-        testMesh.position.y = 0.7
-        this.scene.add(testMesh)
-        
         
         this.resources.on('ready', () => 
         {
             // Setup
-            this.floor = new Floor()
-            this.environment = new Environment()
+
+            // this.floor = new Floor()
+            // this.portal = new Portal()
+            // this.environment = new Environment()
             
             this.setDebug()
         })        

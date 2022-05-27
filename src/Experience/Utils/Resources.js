@@ -1,6 +1,7 @@
 import EventEmitter from './EventEmitter'
 import * as THREE from 'three'
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 
 export default class Resources extends EventEmitter 
 {
@@ -24,10 +25,11 @@ export default class Resources extends EventEmitter
     setLoaders()
     {
         this.loaders = {}
-        this.loaders.gltfLoader = new GLTFLoader()
         this.loaders.textureLoader = new THREE.TextureLoader()
         this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
         this.loaders.shaderLoader = new THREE.FileLoader()
+        this.loaders.dracoLoader = new DRACOLoader()
+        this.loaders.gltfLoader = new GLTFLoader()
     }
     startLoading()
     {
@@ -46,7 +48,7 @@ export default class Resources extends EventEmitter
             {
                 this.loaders.textureLoader.load(source.path,
                     (file) => 
-                    {
+                    {  
                         this.sourceLoaded(source, file)
                     })
             }

@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js";
 import Objects from "./Objects.js";
+import Portal from './Portal.js';
 
 
 export default class ObjectPicker
@@ -35,12 +36,13 @@ export default class ObjectPicker
                 const myObjects = {
                     cube: new THREE.BoxGeometry(1,1,1),
                     sphere: new THREE.SphereGeometry(0.7,12,64),
-                    torus: new THREE.TorusGeometry(1.5,1.0,1.5)
+                    torus: new THREE.TorusGeometry(1.5,1.0,1.5),
+                    // portal: new Portal()
                 }
                 // Define Objects
                 this.object = {}
-                this.debugObjectPicker.add(this.object, 'object', {Box:myObjects.cube, Sphere:myObjects.sphere, Torus: myObjects.torus})
-                .name('Geometry')
+                this.debugObjectPicker.add(this.object, 'object', {Box:myObjects.cube, Sphere:myObjects.sphere, Torus: myObjects.torus, Portal: myObjects.portal})
+                .name('Object #1')
                 .onChange((value)=>
                 {
                     switch(value){
@@ -51,6 +53,9 @@ export default class ObjectPicker
                                 }
                                 if( this.objects.newTorus ){
                                     this.objects.newTorus.destroy()
+                                }
+                                if( this.objects.newPortal ){
+                                    this.objects.newPortal.destroy()
                                 }
                                 this.object = this.objects.cube()
                             }else{
@@ -66,6 +71,7 @@ export default class ObjectPicker
                                 if( this.objects.newTorus ){
                                     this.objects.newTorus.destroy()
                                 }
+                                
                                 this.object = this.objects.sphere()
                             }else{
                                 this.object = this.objects.sphere()
@@ -83,6 +89,92 @@ export default class ObjectPicker
                                 this.object = this.objects.torus()
                             }else{
                                 this.object = this.objects.torus()
+                            }
+                            break;     
+                            
+                        case myObjects.portal:
+                            if( this.objects ){
+                                if(this.objects.newCube){
+                                    this.objects.newCube.destroy()
+                                }
+                                if( this.objects.newSphere ){
+                                    this.objects.newSphere.destroy()
+                                }
+                                if( this.objects.newTorus ){
+                                    this.objects.newTorus.destroy()
+                                }
+                                this.object = this.objects.portal()
+                            }else{
+                                this.object = this.objects.portal()
+                            }
+                            break;     
+                    }
+                })
+                this.debugObjectPicker.add(this.object, 'object', {Box:myObjects.cube, Sphere:myObjects.sphere, Torus: myObjects.torus, Portal: myObjects.portal})
+                .name('Object #2')
+                .onChange((value)=>
+                {
+                    switch(value){
+                        case myObjects.cube:
+                            if( this.objects ){
+                                if(this.objects.newSphere){
+                                    this.objects.newSphere.destroy()
+                                }
+                                if( this.objects.newTorus ){
+                                    this.objects.newTorus.destroy()
+                                }
+                                if( this.objects.newPortal ){
+                                    this.objects.newPortal.destroy()
+                                }
+                                this.object = this.objects.cube()
+                            }else{
+                                this.object = this.objects.cube()
+                            }
+                            break;
+                            
+                        case myObjects.sphere:
+                            if( this.objects ){
+                                if(this.objects.newCube){
+                                    this.objects.newCube.destroy()
+                                }
+                                if( this.objects.newTorus ){
+                                    this.objects.newTorus.destroy()
+                                }
+                                
+                                this.object = this.objects.sphere()
+                            }else{
+                                this.object = this.objects.sphere()
+                            }
+                            break;     
+                            
+                        case myObjects.torus:
+                            if( this.objects ){
+                                if(this.objects.newCube){
+                                    this.objects.newCube.destroy()
+                                }
+                                if( this.objects.newSphere ){
+                                    this.objects.newSphere.destroy()
+                                }
+                                this.object = this.objects.torus()
+                            }else{
+                                this.object = this.objects.torus()
+                            }
+                            break;     
+                            
+                        case myObjects.portal:
+                            if( this.objects ){
+                                if(this.objects.newCube){
+                                    this.objects.newCube.destroy()
+                                }
+                                if( this.objects.newSphere ){
+                                    this.objects.newSphere.destroy()
+                                }
+                                if( this.objects.newTorus ){
+                                    this.objects.newTorus.destroy()
+                                }
+                                this.object = this.objects.portal()
+                            }else{
+                                this.object = this.objects.portal()
                             }
                             break;     
                     }

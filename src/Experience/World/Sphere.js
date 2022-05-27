@@ -52,7 +52,8 @@ export default class Sphere
                 uTime: {type:'f',value: this.uniforms.uTime},
                 uSpeed: {type:'f',value: this.uniforms.uSpeed}
                 
-            }
+            },
+            side: THREE.DoubleSide
         })
     }
     setMesh()
@@ -73,10 +74,23 @@ export default class Sphere
     {
         if(this.debug.active){
             this.debugFolder = this.debug.active
-            this.objectControls = this.debugFolder.children[0].children[0].addFolder('Sphere Controls')
+            console.log(this.debugFolder.children[0].children[3]);
+            for(let i = 0; i< this.debugFolder.children[0].children.length; i++) // Loop through all Debug Objects
+            {
+                if(this.objectControls )
+                {
+                    console.log('do nothing');
+                }
+                else
+                {
+
+                    this.objectControls = this.debugFolder.children[0].children[3].addFolder('Sphere Controls')
+                }
+            }
+            // this.objectControls = this.debugFolder.children[0].children[3].addFolder('Sphere Controls')
             
             // Geometry Controls
-            this.objectControls.add(this, 'radius').min(-2).max(2).step(0.0001).name('Radius')
+            this.objectControls.add(this, 'radius').min(0).max(20).step(0.0001).name('Radius')
             .onChange((value)=>
             {
                 this.radius = value;
@@ -110,12 +124,8 @@ export default class Sphere
                 child.geometry = this.geometry
             }
         })
-        console.log('something');
-        // this.scene.remove(this.mesh)
-        // this.scene.add(this.mesh)
-        // this.update()
-        // this.setGeometry()
-        // this.setMesh()
+        this.setGeometry()
+
     }
     destroy()
     {

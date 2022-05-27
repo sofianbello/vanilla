@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import Cube from "./Cube";
 import Sphere from "./Sphere";
 import Torus from "./Torus";
+import Portal from './Portal.js'
 
 export default class Objects
 {
@@ -22,6 +23,10 @@ export default class Objects
     {
         this.newTorus = new Torus()
     }
+    portal()
+    {
+        this.newPortal = new Portal()
+    }
         
     update()
     {
@@ -33,6 +38,9 @@ export default class Objects
         }
         if(this.newTorus){
             this.newTorus.update()
+        }
+        if(this.newPortal){
+            this.newPortal.update()
         }
     }
 

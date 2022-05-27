@@ -15,6 +15,7 @@ export default class Cube
         this.debug = this.experience.debug;
 
         this.setUniforms()
+        this.setParams()
         this.setGeometry()
 
         this.setMaterial()
@@ -22,9 +23,15 @@ export default class Cube
         this.setDebug()
 
     }
+    setParams()
+    {
+        this.size = { x: 1.5, y: 1.0, z: 1.5 }
+
+        
+    }
     setGeometry()
     {
-        this.geometry = new THREE.BoxGeometry(1.5,1.0,1.5)
+        this.geometry = new THREE.BoxGeometry(this.size.x, this.size.y, this.size.z)
     }
 
     setUniforms()
@@ -42,7 +49,8 @@ export default class Cube
             uniforms:{
                 uTime: {type:'f',value: this.uniforms.uTime},
                 uSpeed: {type:'f',value: this.uniforms.uSpeed}
-            }
+            },
+            side: THREE.DoubleSide
         })
     }
     setMesh()
@@ -63,9 +71,32 @@ export default class Cube
     {
         if(this.debug.active){
             this.debugFolder = this.debug.active
-            this.objectControls = this.debugFolder.children[0].children[0].addFolder('Box Controls')
+
+            
+
+            this.objectControls = this.debugFolder.children[0].children[3].addFolder('Box Controls')
 
             // Geometry Controls
+            this.objectControls.add(this.size, 'x').min(0).max(20).step(0.0001).name('Size X')
+            .onChange((value)=>
+            {
+                this.size.x = value;
+                this.updateMesh()
+            })
+            
+            this.objectControls.add(this.size, 'y').min(0).max(20).step(0.0001).name('Size Y')
+            .onChange((value)=>
+            {
+                this.size.y = value;
+                this.updateMesh()
+            })
+            this.objectControls.add(this.size, 'z').min(0).max(20).step(0.0001).name('Size Z')
+            .onChange((value)=>
+            {
+                this.size.z = value;
+                this.updateMesh()
+            })
+
             
             this.objectControls.add(this.mesh.position, 'x').min(-2).max(2).step(0.0001).name('Position X')
             this.objectControls.add(this.mesh.position, 'y').min(-2).max(2).step(0.0001).name('Position Y')
@@ -84,6 +115,19 @@ export default class Cube
         this.material.uniforms.uSpeed.value = this.uniforms.uSpeed;
         
         // console.log(this.material.uniforms.uTime.value);
+    }
+    updateMesh()
+    {
+        this.mesh.traverse((child)=>
+        {
+            if(child instanceof THREE.Mesh)
+            {
+                // child.geometry.dispose()
+                child.geometry = this.geometry
+            }
+        })
+        this.setGeometry()
+
     }
     destroy()
     {

@@ -3,7 +3,8 @@ import * as THREE from "three";
 import fragment from '../Shaders/Shader_01/fragment.glsl'
 import vertex from '../Shaders/Shader_01/vertex.glsl'
 
-export default class Torus
+
+export default class Sphere 
 {
     constructor()
     {
@@ -28,18 +29,18 @@ export default class Torus
         this.tube = 0.3
         this.rSegments = 32
         this.tSegments = 32
-
+        
     }
     setGeometry()
     {
-        this.geometry = new THREE.TorusGeometry(this.radius,this.tube,this.rSegments,this.tSegments)
+        this.geometry = new THREE.TorusGeometry(this.radius, this.tube, this.rSegments, this.rSegments)
     }
 
     setUniforms()
     {
         this.uniforms = {}
         this.uniforms.uTime = this.time.elapsed
-        this.uniforms.uSpeed = 0.0005 // Default Speed 
+        this.uniforms.uSpeed = 0.0005 // Default Speed
 
 
     }
@@ -51,14 +52,15 @@ export default class Torus
             uniforms:{
                 uTime: {type:'f',value: this.uniforms.uTime},
                 uSpeed: {type:'f',value: this.uniforms.uSpeed}
-            }
+                
+            },
+            side: THREE.DoubleSide
         })
     }
     setMesh()
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.mesh.position.y = 0.5
-        this.mesh.rotation.z = Math.PI*1.5
         this.scene.add(this.mesh)
         this.mesh.traverse((child)=>
         {
@@ -73,22 +75,39 @@ export default class Torus
     {
         if(this.debug.active){
             this.debugFolder = this.debug.active
-            this.objectControls = this.debugFolder.children[0].children[0].addFolder('Torus Controls')
+            this.objectControls = this.debugFolder.children[0].children[3].addFolder('Torus Controls')
             
             // Geometry Controls
-            this.objectControls.add(this, 'radius').min(-2).max(2).step(0.0001).name('Radius')
+            this.objectControls.add(this, 'radius').min(0).max(20).step(0.0001).name('Radius')
             .onChange((value)=>
             {
                 this.radius = value;
                 this.updateMesh()
             })
+            this.objectControls.add(this, 'tube').min(-2).max(20).step(0.0001).name('Tube')
+            .onChange((value)=>
+            {
+                this.tube = value;
+                this.updateMesh()
+            })
+            this.objectControls.add(this, 'tube').min(1).max(20).step(0.0001).name('rSegments')
+            .onChange((value)=>
+            {
+                this.rSegments = value;
+                this.updateMesh()
+            })
+            this.objectControls.add(this, 'tube').min(1).max(20).step(0.0001).name('tSegments')
+            .onChange((value)=>
+            {
+                this.tSegments = value;
+                this.updateMesh()
+            })
             
-
             this.objectControls.add(this.mesh.position, 'x').min(-2).max(2).step(0.0001).name('Position X')
             this.objectControls.add(this.mesh.position, 'y').min(-2).max(2).step(0.0001).name('Position Y')
             this.objectControls.add(this.mesh.position, 'z').min(-2).max(2).step(0.0001).name('Position Z')
             
-            // Uniforms 
+            // Uniforms
             this.objectControls.add(this.mesh.material.uniforms.uSpeed, 'value').min(-0.15).max(0.15).step(0.000001).name('uSpeed')
             .onChange((value)=>
             {
@@ -100,14 +119,20 @@ export default class Torus
     {
         this.material.uniforms.uTime.value = this.time.elapsed
         this.material.uniforms.uSpeed.value = this.uniforms.uSpeed;
-        
+        // console.log(this.uniforms.uTime);
     }
     updateMesh()
     {
-        this.mesh.geometry.dispose()
-        this.scene.remove(this.mesh)
+        this.mesh.traverse((child)=>
+        {
+            if(child instanceof THREE.Mesh)
+            {
+                // child.geometry.dispose()
+                child.geometry = this.geometry
+            }
+        })
         this.setGeometry()
-        this.setMesh()
+
     }
     destroy()
     {
@@ -130,7 +155,7 @@ export default class Torus
 
         })
         this.scene.remove(this.mesh)
+        this.objectControls.destroy()
     }
-    
 
 }

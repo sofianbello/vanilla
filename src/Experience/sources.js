@@ -22,4 +22,14 @@ export default [
         type: 'texture',
         path: 'textures/dirt/normal.jpg'
     },
+    {
+        name: 'portalTexture',
+        type: 'texture',
+        path: 'models/Portal/baked.jpg'
+    },
+    {
+        name: 'portalModel',
+        type: 'gltfModel',
+        path: 'models/Portal/portal.glb'
+    }
 ]
